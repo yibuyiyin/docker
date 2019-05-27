@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-    rsyslog-agent:
+    rsyslog-server:
         image: yibuyiyin/alpine-rsyslog-server
         restart: always
         container_name: rsyslog-server 

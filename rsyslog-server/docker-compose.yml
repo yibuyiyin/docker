@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    rsyslog-agent:
+        image: yibuyiyin/alpine-rsyslog-server
+        restart: always
+        container_name: rsyslog-server 
+        ports:
+            - 5140:514
+        volumes:
+            - /var/log/rsyslog:/var/log/rsyslog

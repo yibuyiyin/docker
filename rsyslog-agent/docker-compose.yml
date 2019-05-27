@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    rsyslog-agent:
+        image: yibuyiyin/alpine-rsyslog-agent
+        restart: always
+        container_name: rsyslog-agent 
+        environment:
+            # 多个转发规则必须换行
+            FWD_ADDR: 
+                local7.*,@@172.17.47.3:5140
+            # 多个日志文件必须换行
+            # tag,facility,severity,log
+            LOG_FILE: 
+                appname,local7,debug,/logs/prod.log
+        volumes:
+            - /data1/logs/:/logs

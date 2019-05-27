@@ -26,7 +26,7 @@ do
     s_path=$(path $(trim ${log[4]}))
     s_msg=$(trim ${log[5]})
 
-    s_filename=$base_dir/$s_tag$s_path
+    s_filename=$base_dir/$s_tag/$s_path
     s_dirname=$(dirname $s_filename)
     if [ ! -d $s_dirname ]; then
         mkdir -p $s_dirname

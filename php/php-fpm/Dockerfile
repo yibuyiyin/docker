@@ -3,7 +3,10 @@ MAINTAINER yupeng <peng.yu@yibuyiyin.com>
 
 COPY sources.list .
 
-RUN rm /etc/apt/sources.list /etc/apt/sources.list.d/buster.list && mv sources.list /etc/apt/ && apt-get update \
+RUN echo "deb http://mirrors.ustc.edu.cn/debian stable main contrib non-free" > /etc/apt/sources.list \
+    && echo "deb http://mirrors.ustc.edu.cn/debian stable-updates main contrib non-free" >> /etc/apt/sources.list \
+    && rm /etc/apt/sources.list.d/buster.list \
+    && apt-get update \
     # set timezone
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
@@ -38,7 +41,7 @@ RUN rm /etc/apt/sources.list /etc/apt/sources.list.d/buster.list && mv sources.l
     && curl -L -o /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-7.0.phar \
     && chmod +x /usr/local/bin/phpunit \
     # install php other ext
-    && docker-php-ext-install -j$(nproc) pdo pdo_mysql pcntl bcmath opcache \
+    && docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli pcntl bcmath opcache \
     # clear cache
     && apt-get clean \
     && rm -rf /usr/src/php \

@@ -1,8 +1,6 @@
 FROM php:fpm
 MAINTAINER yupeng <peng.yu@yibuyiyin.com>
 
-COPY sources.list .
-
 RUN echo "deb http://mirrors.ustc.edu.cn/debian stable main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://mirrors.ustc.edu.cn/debian stable-updates main contrib non-free" >> /etc/apt/sources.list \
     && rm /etc/apt/sources.list.d/buster.list \
@@ -31,6 +29,17 @@ RUN echo "deb http://mirrors.ustc.edu.cn/debian stable main contrib non-free" > 
     && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
+    # install soap
+    && apt-get install -y --no-install-recommends libxml2-dev libtidy-dev libxslt1-dev \
+    && docker-php-ext-install -j$(nproc) soap wddx xmlrpc tidy xsl \
+    # install ldap
+    && apt-get install -y --no-install-recommends libldap2-dev \
+    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
+    && docker-php-ext-install -j$(nproc) ldap \
+    # install imap
+    && apt-get install -y --no-install-recommends libc-client-dev libkrb5-dev \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install -j$(nproc) imap \
     # install apcu
     && pecl install apcu \
     && pecl install apcu_bc-1.0.3 \

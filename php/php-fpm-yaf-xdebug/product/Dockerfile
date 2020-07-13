@@ -5,7 +5,7 @@ COPY sources.list /etc/apt/sources.list
 RUN apt-get update \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
-    && pecl install yaf \
+    && pecl install yaf-3.0.9 \
     # install yaf \
     && docker-php-ext-enable yaf \
     && apt-get install -y libzip-dev zip \
@@ -28,7 +28,6 @@ RUN apt-get update \
     && docker-php-ext-install -j$(nproc) imap \
     # install apcu \
     && pecl install apcu \
-    && pecl install apcu_bc-1.0.5 \
     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
     # install redis \
     && pecl install redis-5.3.1 \

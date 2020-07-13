@@ -36,6 +36,9 @@ RUN apt-get update \
     # install phpunit \
     && curl -L -o /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-7.0.phar \
     && chmod +x /usr/local/bin/phpunit \
+    # install xdebug \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     # install php other ext \
     && docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli pcntl bcmath opcache \
     # clear cache \
